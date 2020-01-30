@@ -1,0 +1,25 @@
+﻿@model IEnumerable<System.IO.FileInfo>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+
+
+    <div class="text-center">
+        <h1 class="display-1"> Upload:</h1>
+        @using (Html.BeginForm("", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <input type="file" name="FileUpload1" />
+            <br />
+            <input type="submit" name="Submit" id="Submit" value="Upload" />
+        }
+    </div>
+    <div class="text-center">
+        <h1 class="display-1"> Server Files</h1>
+        @foreach (var item in Model)
+        {
+            <div class="align-items-md-center">@item.name</div>
+        }
+    </div>
