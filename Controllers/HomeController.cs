@@ -35,8 +35,8 @@ namespace UploadFileSampler.Controllers
                     }
 
                 }
-            var files = Directory.GetFiles(UploadFolder).Select(x=>new FileInfo(x));
-            
+            IEnumerable<InfoWithURL> files;
+            files = Directory.GetFiles(UploadFolder).Select(x => new InfoWithURL() { FileInfo = new FileInfo(x), URL = $"http://{Request.Host}\\uploads\\{new FileInfo(x).Name}" });
             return View(files);
         }
 
@@ -49,6 +49,14 @@ namespace UploadFileSampler.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public async Task<IActionResult> Delete(string id)
+        {
+            string UploadFolder = $"{_hostingEnvironment.WebRootPath}\\Uploads";
+            System.IO.File.Delete($"{UploadFolder}\\{id}");
+            IEnumerable<InfoWithURL> files;
+            files = Directory.GetFiles(UploadFolder).Select(x => new InfoWithURL() { FileInfo = new FileInfo(x), URL = $"http://{Request.Host}\\uploads\\{new FileInfo(x).Name}" });
+            return View("Index",files);
         }
     }
 }

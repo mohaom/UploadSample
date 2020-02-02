@@ -1,0 +1,37 @@
+﻿@model IEnumerable<InfoWithURL>
+
+@{
+    ViewData["Title"] = "ThankYou";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb">Thanks for your submitting your data Please check your image below</div>
+<div class="container"> 
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Image</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{ int index = 0;}
+            @foreach (var item in Model)
+            {
+                index++;
+                <tr>
+
+                    <td>@index.ToString()</td>
+                    <td>@item.FileInfo.Name</td>
+                    <td>@(item.FileInfo.Length / 1024) kb</td>
+                    <td><image width="50" height="40" class="img-thumbnail" src="@item.URL"></image></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
